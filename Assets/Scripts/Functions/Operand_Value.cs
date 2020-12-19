@@ -22,6 +22,8 @@ namespace Application.Functions
         {
             return;
         }
+
+        public override string Symbol => _value.ToString();
     }
 
 }

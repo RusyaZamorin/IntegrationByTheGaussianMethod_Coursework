@@ -6,9 +6,11 @@ namespace Application.Functions
 {
     public class Operannd_X : DefaultOperator
     {
+        public const string XSymbol = "x";
+
         private double _valueX;
 
-        public Operannd_X() : base(null, null) { }        
+        public Operannd_X() : base(null, null) { }
 
         public override double GetValue()
         {
@@ -19,6 +21,8 @@ namespace Application.Functions
         {
             _valueX = x;
         }
+
+        public override string Symbol => "x";        
     }
 }
 

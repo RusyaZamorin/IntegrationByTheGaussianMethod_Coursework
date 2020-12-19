@@ -18,6 +18,7 @@ namespace Application.Functions
             RightOperand = rightOperand;
         }
 
+        public virtual string Symbol => "df";
 
         public virtual double GetValue()
         {
@@ -31,6 +32,7 @@ namespace Application.Functions
             if (_rightOperand != null)
                 _rightOperand.SetX(x);
         }
+   
     }
 }
 

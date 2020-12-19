@@ -6,6 +6,11 @@ namespace Application.Functions
 {
     public class OpSplit : DefaultOperator
     {
+        public OpSplit() : base(null, null)
+        {
+
+        }
+
         public OpSplit(IOperator leftOperand, IOperator rightOperand) : base(leftOperand, rightOperand)
         {
         }
@@ -20,6 +25,6 @@ namespace Application.Functions
             else
                 return LeftOperand.GetValue() / RightOperand.GetValue();
         }
-
+        public override string Symbol => "/";
     }
 }

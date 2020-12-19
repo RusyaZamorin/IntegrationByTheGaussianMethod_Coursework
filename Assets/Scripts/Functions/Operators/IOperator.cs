@@ -8,10 +8,12 @@ namespace Application.Functions
     {
         IOperator LeftOperand { get; set; }
         IOperator RightOperand { get; set; }
+        string Symbol { get; }
+
 
         double GetValue();
 
-        void SetX(double x);
+        void SetX(double x);                
     }
 }
 
