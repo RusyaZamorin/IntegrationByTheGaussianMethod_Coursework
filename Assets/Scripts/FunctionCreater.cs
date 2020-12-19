@@ -5,27 +5,24 @@ using UnityEngine;
 using Application.Functions;
 using TMPro;
 using System;
+using Application;
 
 namespace Application.Input
 {
     public class FunctionCreater : MonoBehaviour
-    {
+    {        
         [SerializeField] private TMP_Text _printFunctionField;
         [SerializeField] private string _function;
-        
+        [SerializeField] private int _n;
 
         [ContextMenu("Test")]
         public void Test()
         {            
             var reversePolishNotation = ReversePolishNotation.FromString(_function);
 
-            Debug.Log(reversePolishNotation);
             Function function = ConvertReversePolishNotationToFunction(reversePolishNotation);
 
-            for(float i = 0; i < 10f; i++)
-            {
-                Debug.Log(function.Execute(i));
-            }                                                  
+            Debug.Log(GaussianIntegration.Execute(_n, function, 1, 10));            
         }
 
         private Function ConvertReversePolishNotationToFunction(string reversePolishNotation)
