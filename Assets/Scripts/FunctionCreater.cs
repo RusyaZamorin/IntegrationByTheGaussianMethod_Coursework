@@ -7,25 +7,20 @@ using TMPro;
 using System;
 using Application;
 
-namespace Application.Input
+namespace Application
 {
-    public class FunctionCreater : MonoBehaviour
-    {        
-        [SerializeField] private TMP_Text _printFunctionField;
-        [SerializeField] private string _function;
-        [SerializeField] private int _n;
-
-        [ContextMenu("Test")]
-        public void Test()
-        {            
-            var reversePolishNotation = ReversePolishNotation.FromString(_function);
+    public static class FunctionCreater 
+    {                
+        public static Function FromString(string functionStr)
+        {
+            var reversePolishNotation = ReversePolishNotation.FromString(functionStr);
 
             Function function = ConvertReversePolishNotationToFunction(reversePolishNotation);
 
-            Debug.Log(GaussianIntegration.Execute(_n, function, 1, 10));            
+            return function;            
         }
 
-        private Function ConvertReversePolishNotationToFunction(string reversePolishNotation)
+        private static Function ConvertReversePolishNotationToFunction(string reversePolishNotation)
         {
             char[] separator = { ' ' };
 

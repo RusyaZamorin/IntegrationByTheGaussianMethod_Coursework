@@ -8,27 +8,30 @@ namespace Application.Input
     public class FunctionInputManager : MonoBehaviour
     {
         [SerializeField] private TMP_InputField _functionInputField;
+        [SerializeField] private MainCalculator _calculator;
 
-        public void HandleChangeFunction(string value)
+        public void HandleChangeFunction(string function)
         {
-
+            Validation(function);
         }
 
-        private void Validation(string value)
+        public void SetFunction(string function)
         {
-            for(int i = 0; i < value.Length; i++)
-            {
-                if(value[i] == ',')
-                {
-                    //value[i] = '.';
-                }
-            }
-            
+            _calculator.SetFunction(function);
         }
 
-        private void SetValueTo_FunctionInputField(string value)
+        private void Validation(string function)
         {
-            //_functionInputField
+            function = function.Replace('.', ',');
+            function = function.Replace('х', 'x');
+            function = function.Replace('Х', 'x');
+
+            SetValueTo_FunctionInputField(function);
+        }
+
+        private void SetValueTo_FunctionInputField(string function)
+        {
+            _functionInputField.text = function;
         }
     }
 }
