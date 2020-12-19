@@ -37,7 +37,8 @@ public static class Operators
     {
         var type = opert.GetType();
         if (type == typeof(OpSin) ||
-           type == typeof(OpCos)
+           type == typeof(OpCos) ||
+           type == typeof(OpUnaryMinus)
            )
         {
             return true;
@@ -57,7 +58,8 @@ public static class Operators
         {"/", typeof (OpSplit)},
         {"^", typeof (OpPow)},
         {"sin", typeof (OpSin)},
-        {"cos", typeof (OpCos)}
+        {"cos", typeof (OpCos)},
+        {"um", typeof (OpUnaryMinus)}
     };
 
     private static List<string> _symbolsList = new List<string>(_operatorsTypes.Keys);

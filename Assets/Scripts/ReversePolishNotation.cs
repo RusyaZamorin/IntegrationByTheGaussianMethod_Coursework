@@ -9,7 +9,7 @@ public static class ReversePolishNotation
     {
         string output = string.Empty; //Строка для хранения выражения
         Stack<string> operStack = new Stack<string>(); //Стек для хранения операторов
-
+        bool lastNoteIsOperator = true;
         string complexityOperator = "";
 
         for (int i = 0; i < input.Length; i++) //Для каждого символа в входной строке
@@ -18,6 +18,12 @@ public static class ReversePolishNotation
             if (IsDelimeter(input[i].ToString()))
                 continue; //Переходим к следующему символу
             
+            // Проверяем не являеться ли минус унарным
+            if(input[i] == '-' && lastNoteIsOperator == true)
+            {
+                operStack.Push("um");
+            }
+
             //Если символ - цифра, то считываем все число
             else if (char.IsDigit(input[i])) //Если цифра
             {
@@ -32,6 +38,7 @@ public static class ReversePolishNotation
 
                 output += " "; //Дописываем после числа пробел в строку с выражением
                 i--; //Возвращаемся на один символ назад, к символу перед разделителем
+                lastNoteIsOperator = false;
             }
 
             //Если символ - оператор
@@ -54,17 +61,22 @@ public static class ReversePolishNotation
                 {
                     if (operStack.Count > 0) //Если в стеке есть элементы
                         if (GetPriority(input[i].ToString()) <= GetPriority(operStack.Peek())) //И если приоритет нашего оператора меньше или равен приоритету оператора на вершине стека
+                        {
                             output += operStack.Pop().ToString() + " "; //То добавляем последний оператор из стека в строку с выражением
+                        }
 
                     operStack.Push(input[i].ToString()); //Если стек пуст, или же приоритет оператора выше - добавляем операторов на вершину стека
-
                 }
+
+                lastNoteIsOperator = true;
             }
 
             // Если символ X
             else if (Operators.IsX(input[i].ToString()))
             {
                 output += Operators.XSymbol + " ";
+
+                lastNoteIsOperator = false;
             }
 
             // если символ не распознан или является частью длинных операторов(sin, cos, tg ...)
@@ -76,6 +88,8 @@ public static class ReversePolishNotation
                 {
                     operStack.Push(complexityOperator);
                     complexityOperator = "";
+
+                    lastNoteIsOperator = true;
                 }
             }
         }
