@@ -2871,6 +2871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _printFunctionField: {fileID: 1815529632}
+  _function: sinx
 --- !u!1001 &678487705
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,21 +8,21 @@ public static class ReversePolishNotation
     public static string FromString(string input)
     {
         string output = string.Empty; //Строка для хранения выражения
-        Stack<char> operStack = new Stack<char>(); //Стек для хранения операторов
+        Stack<string> operStack = new Stack<string>(); //Стек для хранения операторов
 
         string complexityOperator = "";
 
         for (int i = 0; i < input.Length; i++) //Для каждого символа в входной строке
         {
             //Разделители пропускаем
-            if (IsDelimeter(input[i]))
+            if (IsDelimeter(input[i].ToString()))
                 continue; //Переходим к следующему символу
             
             //Если символ - цифра, то считываем все число
             else if (char.IsDigit(input[i])) //Если цифра
             {
                 //Читаем до разделителя или оператора, что бы получить число
-                while (!IsDelimeter(input[i]) && !IsOperator(input[i]))
+                while (!IsDelimeter(input[i].ToString()) && !IsOperator(input[i].ToString()))
                 {
                     output += input[i]; //Добавляем каждую цифру числа к нашей строке
                     i++; //Переходим к следующему символу
@@ -35,28 +35,28 @@ public static class ReversePolishNotation
             }
 
             //Если символ - оператор
-            else if (IsOperator(input[i])) //Если оператор
+            else if (IsOperator(input[i].ToString())) //Если оператор
             {
                 if (input[i] == '(') //Если символ - открывающая скобка
-                    operStack.Push(input[i]); //Записываем её в стек
+                    operStack.Push(input[i].ToString()); //Записываем её в стек
                 else if (input[i] == ')') //Если символ - закрывающая скобка
                 {
                     //Выписываем все операторы до открывающей скобки в строку
-                    char s = operStack.Pop();
+                    string s = operStack.Pop();
 
-                    while (s != '(')
+                    while (s != "(")
                     {
-                        output += s.ToString() + ' ';
+                        output += s + ' ';
                         s = operStack.Pop();
                     }
                 }
                 else //Если любой другой оператор
                 {
                     if (operStack.Count > 0) //Если в стеке есть элементы
-                        if (GetPriority(input[i]) <= GetPriority(operStack.Peek())) //И если приоритет нашего оператора меньше или равен приоритету оператора на вершине стека
+                        if (GetPriority(input[i].ToString()) <= GetPriority(operStack.Peek())) //И если приоритет нашего оператора меньше или равен приоритету оператора на вершине стека
                             output += operStack.Pop().ToString() + " "; //То добавляем последний оператор из стека в строку с выражением
 
-                    operStack.Push(char.Parse(input[i].ToString())); //Если стек пуст, или же приоритет оператора выше - добавляем операторов на вершину стека
+                    operStack.Push(input[i].ToString()); //Если стек пуст, или же приоритет оператора выше - добавляем операторов на вершину стека
 
                 }
             }
@@ -73,8 +73,8 @@ public static class ReversePolishNotation
                 complexityOperator += input[i];
 
                 if(Operators.IsOperator(complexityOperator))
-                {                    
-                    //output += complexityOperator + " ";
+                {
+                    operStack.Push(complexityOperator);
                     complexityOperator = "";
                 }
             }
@@ -86,24 +86,24 @@ public static class ReversePolishNotation
         return output; //Возвращаем выражение в постфиксной записи
     }
 
-    static private bool IsDelimeter(char symbol)
+    static private bool IsDelimeter(string symbol)
     {
         if ((" =".IndexOf(symbol) != -1))
             return true;
         return false;
     }
 
-    static private bool IsOperator(char symbol)
+    static private bool IsOperator(string symbol)
     {
-        if (Operators.ListSymbols.Contains(symbol.ToString()))
+        if (Operators.ListSymbols.Contains(symbol))
             return true;
         return false;
     }
 
-    static private int GetPriority(char symbol)
+    static private int GetPriority(string symbol)
     {
-        if (Operators.ListSymbols.Contains(symbol.ToString()))
-            return Operators.ListSymbols.IndexOf(symbol.ToString());
+        if (Operators.ListSymbols.Contains(symbol))
+            return Operators.ListSymbols.IndexOf(symbol);
         else
             return Operators.ListSymbols.Count;
     }

@@ -20,10 +20,12 @@ namespace Application.Input
             var reversePolishNotation = ReversePolishNotation.FromString(_function);
 
             Debug.Log(reversePolishNotation);
+            Function function = ConvertReversePolishNotationToFunction(reversePolishNotation);
 
-            double result = ConvertReversePolishNotationToFunction(reversePolishNotation).Execute(5f);
-                          
-            Debug.Log(result);
+            for(float i = 0; i < 10f; i++)
+            {
+                Debug.Log(function.Execute(i));
+            }                                                  
         }
 
         private Function ConvertReversePolishNotationToFunction(string reversePolishNotation)
@@ -44,7 +46,7 @@ namespace Application.Input
                     
                     if(Operators.IsUnaryOperator(opert))
                     {
-                        opert.RightOperand = operatorsStack.Pop();
+                        opert.LeftOperand = operatorsStack.Pop();
                     }
                     else
                     {
